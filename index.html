@@ -1,105 +1,107 @@
 <!DOCTYPE HTML>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eldad Workeneh Tolla's Portfolio</title>
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-</head>
-<body class="homepage is-preload">
+<html>
+	<head>
+		<title>Eldad Tolla's Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			body {
+				background-color: #f4f4f4;
+				font-family: 'Arial', sans-serif;
+			}
+			#header {
+				background-color: #333;
+				color: white;
+				padding: 20px;
+				text-align: center;
+			}
+			#banner {
+				background: #282828;
+				color: white;
+				padding: 60px 20px;
+				text-align: center;
+			}
+			#about, #projects, #contact {
+				padding: 40px;
+				text-align: center;
+				background-color: #fff;
+				margin: 20px auto;
+				max-width: 900px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+			footer {
+				text-align: center;
+				padding: 20px;
+				background-color: #333;
+				color: white;
+				margin-top: 20px;
+			}
+			footer a {
+				color: #7FDBFF;
+				text-decoration: none;
+			}
+			#contact a {
+				color: #3498db;
+				text-decoration: none;
+			}
+			.button {
+				background-color: #3498db;
+				color: white;
+				padding: 10px 20px;
+				border-radius: 50px;
+				text-decoration: none;
+			}
+			.button:hover {
+				background-color: #2980b9;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Header -->
+		<div id="header">
+			<h1>Eldad Tolla</h1>
+			<p>Welcome to my personal website!</p>
+			<a href="#about" class="button">Learn More</a>
+		</div>
 
-    <!-- Page Wrapper -->
-    <div id="page-wrapper">
+		<!-- Banner -->
+		<section id="banner">
+			<h2>Hi, I'm Eldad.</h2>
+			<p>Exploring the world of AI, Machine Learning, and Technology.<br />Take a look at my work!</p>
+			<a href="#projects" class="button">See Projects</a>
+		</section>
 
-        <!-- Header -->
-        <header id="header">
-            <div class="inner">
-                <h1 id="logo"><a href="index.html">Eldad Workeneh Tolla</a></h1>
-                <hr />
-                <p>AI & Machine Learning Enthusiast | Developer | Student at Randolph College</p>
-            </div>
+		<!-- About Section -->
+		<section id="about">
+			<h2>About Me</h2>
+			<p>I'm a passionate computer science student at Randolph College, focusing on AI and Machine Learning. Through my studies, internships, and personal projects, I aim to make meaningful contributions to the tech industry. My curiosity drives me to constantly learn and improve.</p>
+		</section>
 
-            <!-- Navigation -->
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Me</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
+		<!-- Projects Section -->
+		<section id="projects">
+			<h2>Projects</h2>
+			<p>Check out some of the exciting projects I've worked on:</p>
+			<ul>
+				<li><strong>Data Mining and Analytics:</strong> Leveraging USDA crop data for insights on weather patterns.</li>
+				<li><strong>Interactive Web Development:</strong> Developing dynamic and user-friendly web applications.</li>
+				<li><strong>Machine Learning Models:</strong> Creating AI models to solve real-world problems.</li>
+			</ul>
+		</section>
 
-        <!-- Banner -->
-        <section id="banner">
-            <div class="inner">
-                <h2>Welcome to Eldad Workeneh Tolla's Portfolio</h2>
-                <p>Explore my work, projects, and passions in AI, machine learning, and technology.</p>
-                <a href="#main-content" class="button circled scrolly">Get Started</a>
-            </div>
-        </section>
+		<!-- Contact Section -->
+		<section id="contact">
+			<h2>Contact Me</h2>
+			<p>Feel free to reach out to me via email or connect with me on LinkedIn.</p>
+			<p>Email: <a href="mailto:etolla@randolphcollege.edu">etolla@randolphcollege.edu</a></p>
+			<p>LinkedIn: <a href="https://www.linkedin.com/in/eldad-tolla-441166219" target="_blank">Eldad Tolla</a></p>
+		</section>
 
-        <!-- Main Content -->
-        <section id="main-content" class="wrapper style1">
-            <div class="inner">
-                <header class="major">
-                    <h2>About Me</h2>
-                    <p>I'm a sophomore at Randolph College majoring in AI and Machine Learning. I have a passion for developing innovative solutions using technology and love working on projects that have real-world applications. Check out my latest projects below!</p>
-                </header>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="wrapper style2">
-            <div class="inner">
-                <header class="major">
-                    <h2>Projects</h2>
-                </header>
-                <div class="features">
-                    <article>
-                        <h3>AI Chatbot</h3>
-                        <p>A chatbot using natural language processing to interact with users and provide helpful information.</p>
-                    </article>
-                    <article>
-                        <h3>Data Visualization Tool</h3>
-                        <p>A web app that uses machine learning algorithms to visualize complex datasets and provide insights.</p>
-                    </article>
-                    <article>
-                        <h3>Personal Finance Tracker</h3>
-                        <p>An application built to help users manage their finances by tracking expenses, budgeting, and visualizing savings goals.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="wrapper style3">
-            <div class="inner">
-                <header class="major">
-                    <h2>Contact Me</h2>
-                </header>
-                <p>If you'd like to collaborate, have any questions, or just want to say hi, feel free to reach out to me via the following channels:</p>
-                <ul class="contact">
-                    <li>Email: <a href="mailto:etolla@randolphcollege.edu">etolla@randolphcollege.edu</a></li>
-                    <li>LinkedIn: <a href="www.linkedin.com/in/eldad-tolla-441166219">www.linkedin.com/in/eldad-tolla-441166219</a></li>
-                    <li>GitHub: <a href="https://github.com/eldadworkeneh">github.com/eldadworkeneh</a></li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer id="footer">
-            <div class="inner">
-                <p>&copy; 2024 Eldad Workeneh Tolla. All rights reserved.</p>
-            </div>
-        </footer>
-
-    </div>
-
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
+		<!-- Footer -->
+		<footer>
+			<p>&copy; 2024 Eldad Tolla. All rights reserved.</p>
+			<p>Design inspired by <a href="https://html5up.net">HTML5 UP</a></p>
+		</footer>
+	</body>
 </html>
-
