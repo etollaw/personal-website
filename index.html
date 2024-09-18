@@ -1,109 +1,130 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Eldad Tolla's Portfolio</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<style>
-			body {
-				background-color: #f4f4f4;
-				font-family: 'Arial', sans-serif;
-			}
-			#header {
-				background-color: #333;
-				color: white;
-				padding: 20px;
-				text-align: center;
-			}
-			#banner {
-				background: url('assets/css/images/randolph.jpg') no-repeat center center/cover !important;
-				color: white;
-				padding: 60px 20px;
-				text-align: center;
-				min-height: 300px;
-			}
-			#about, #projects, #contact {
-				padding: 40px;
-				text-align: center;
-				background-color: #fff;
-				margin: 20px auto;
-				max-width: 900px;
-				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-			}
-			footer {
-				text-align: center;
-				padding: 20px;
-				background-color: #333;
-				color: white;
-				margin-top: 20px;
-			}
-			footer a {
-				color: #7FDBFF;
-				text-decoration: none;
-			}
-			#contact a {
-				color: #3498db;
-				text-decoration: none;
-			}
-			.button {
-				background-color: #3498db;
-				color: white;
-				padding: 10px 20px;
-				border-radius: 50px;
-				text-decoration: none;
-			}
-			.button:hover {
-				background-color: #2980b9;
-			}
-		</style>
-	</head>
-	<body>
-		<!-- Header -->
-		<div id="header">
-			<h1>Eldad Tolla</h1>
-			<p>Welcome to my personal website!</p>
-			<a href="#about" class="button">Learn More</a>
-		</div>
+<head>
+    <title>Eldad Tolla - Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="homepage is-preload">
+    <div id="page-wrapper">
 
-		<!-- Banner -->
-		<section id="banner">
-			<h2>Hi, I'm Eldad.</h2>
-			<p>Exploring the world of AI, Machine Learning, and Technology.<br />Take a look at my work!</p>
-			<a href="#projects" class="button">See Projects</a>
-		</section>
+        <!-- Header -->
+        <div id="header">
+            <div class="inner">
+                <header>
+                    <h1><a href="index.html" id="logo">Eldad Tolla</a></h1>
+                    <hr />
+                    <p>Welcome to my personal website!</p>
+                </header>
+                <footer>
+                    <a href="#banner" class="button circled scrolly">Start</a>
+                </footer>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="#">Dropdown</a>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About me</a></li>
+                            <li><a href="projects.html">Projects</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li>
+                                <a href="#">And a submenu &hellip;</a>
+                                <ul>
+                                    <li><a href="#">Lorem ipsum dolor</a></li>
+                                    <li><a href="#">Phasellus consequat</a></li>
+                                    <li><a href="#">Magna phasellus</a></li>
+                                    <li><a href="#">Etiam dolore nisl</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Veroeros feugiat</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="left-sidebar.html">Left Sidebar</a></li>
+                    <li><a href="right-sidebar.html">Right Sidebar</a></li>
+                    <li><a href="no-sidebar.html">No Sidebar</a></li>
+                </ul>
+            </nav>
+        </div>
 
-		<!-- About Section -->
-		<section id="about">
-			<h2>About Me</h2>
-			<p>I'm a passionate computer science student at Randolph College, focusing on AI and Machine Learning. Through my studies, internships, and personal projects, I aim to make meaningful contributions to the tech industry. My curiosity drives me to constantly learn and improve.</p>
-		</section>
+        <!-- Banner -->
+        <section id="banner">
+            <header>
+                <h2>Hi, I'm Eldad Tolla.</h2>
+                <p>Exploring the world of AI, Machine Learning, and Technology.<br />Take a look at my work!</p>
+            </header>
+            <footer>
+                <a href="#about" class="button circled scrolly">Learn More</a>
+            </footer>
+        </section>
 
-		<!-- Projects Section -->
-		<section id="projects">
-			<h2>Projects</h2>
-			<p>Check out some of the exciting projects I've worked on:</p>
-			<ul>
-				<li><strong>Data Mining and Analytics:</strong> Leveraging USDA crop data for insights on weather patterns.</li>
-				<li><strong>Interactive Web Development:</strong> Developing dynamic and user-friendly web applications.</li>
-				<li><strong>Machine Learning Models:</strong> Creating AI models to solve real-world problems.</li>
-			</ul>
-		</section>
+        <!-- Main -->
+        <div id="main">
 
-		<!-- Contact Section -->
-		<section id="contact">
-			<h2>Contact Me</h2>
-			<p>Feel free to reach out to me via email or connect with me on LinkedIn.</p>
-			<p>Email: <a href="mailto:etolla@randolphcollege.edu">etolla@randolphcollege.edu</a></p>
-			<p>LinkedIn: <a href="https://www.linkedin.com/in/eldad-tolla-441166219" target="_blank">Eldad Tolla</a></p>
-		</section>
+            <!-- About -->
+            <section id="about">
+                <header>
+                    <h2>About Me</h2>
+                </header>
+                <p>I'm a passionate computer science student at Randolph College, focusing on AI and Machine Learning. Through my studies, internships, and personal projects, I aim to make meaningful contributions to the tech industry. My curiosity drives me to constantly learn and improve.</p>
+            </section>
 
-		<!-- Footer -->
-		<footer>
-			<p>&copy; 2024 Eldad Tolla. All rights reserved.</p>
-			<p>Design inspired by <a href="https://html5up.net">HTML5 UP</a></p>
-		</footer>
-	</body>
+            <!-- Projects -->
+            <section id="projects">
+                <header>
+                    <h2>Projects</h2>
+                </header>
+                <p>Check out some of the exciting projects I've worked on:</p>
+                <ul>
+                    <li><strong>Data Mining and Analytics:</strong> Leveraging USDA crop data for insights on weather patterns.</li>
+                    <li><strong>Interactive Web Development:</strong> Developing dynamic and user-friendly web applications.</li>
+                    <li><strong>Machine Learning Models:</strong> Creating AI models to solve real-world problems.</li>
+                </ul>
+            </section>
+
+            <!-- Contact -->
+            <section id="contact">
+                <header>
+                    <h2>Contact Me</h2>
+                </header>
+                <p>Feel free to reach out to me via email or connect with me on LinkedIn.</p>
+                <p>Email: <a href="mailto:etolla@randolphcollege.edu">etolla@randolphcollege.edu</a></p>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/eldad-tolla-441166219" target="_blank">Eldad Tolla</a></p>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+                <ul class="icons">
+                    <li><a href="https://twitter.com" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://facebook.com" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://instagram.com" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="https://pinterest.com" class="icon brands fa-pinterest-p"><span class="label">Pinterest</span></a></li>
+                    <li><a href="https://dribbble.com" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+                    <li><a href="https://linkedin.com/in/eldad-tolla-441166219" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                </ul>
+                <ul class="copyright">
+                    <li>&copy; Eldad Tolla</li>
+                    <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
 </html>
 
