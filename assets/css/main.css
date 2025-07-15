@@ -98,7 +98,7 @@ input, select, textarea {
 		box-sizing: inherit;
 	}
 
-	body {
+/* 	body {
 		background-color: #2e3141;
 		background-image: linear-gradient(to top, rgba(46, 49, 65, 0.8), rgba(46, 49, 65, 0.8)), url("../../images/pic23.jpg");
 		background-size: auto,
@@ -107,7 +107,7 @@ input, select, textarea {
         fixed;
 		background-position: center,
         center;
-	}
+	} */
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 			-moz-animation: none !important;
