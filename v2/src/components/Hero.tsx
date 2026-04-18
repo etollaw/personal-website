@@ -62,7 +62,7 @@ export default function Hero() {
             className="mt-8 flex flex-wrap gap-3"
           >
             <a
-              href="/projects"
+              href="/work"
               className="px-6 py-3 bg-accent text-background font-medium text-sm rounded-lg hover:opacity-90 transition-opacity"
             >
               View Projects
