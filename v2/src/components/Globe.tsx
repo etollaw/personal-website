@@ -1,281 +1,308 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import createGlobe from "cobe";
 
 /**
- * Interactive 3D globe showing locations where Eldad has studied and worked.
- * Built with cobe (5KB WebGL globe — same library Vercel uses).
+ * Interactive 3D globe of places Eldad has studied and worked (cobe, WebGL).
  *
- * Features:
- * - Auto-rotation that pauses on pointer interaction
- * - Click a location label to rotate the globe to face it
- * - Brighter globe for dark backgrounds
- * - Graceful degradation if WebGL unavailable
- * - Responsive canvas sizing
+ * - Drag in any direction to spin; release with momentum
+ * - Click a location chip to glide the globe to it
+ * - Auto-rotates when idle (off for prefers-reduced-motion)
  */
 
 interface LocationMarker {
   label: string;
+  place: string;
   lat: number;
   lng: number;
 }
 
 const locations: LocationMarker[] = [
-  { label: "Columbia University", lat: 40.8075, lng: -73.9626 },
-  { label: "TACC @ UT Austin", lat: 30.2672, lng: -97.7431 },
-  { label: "Randolph College", lat: 37.4138, lng: -79.1422 },
+  { label: "Columbia University", place: "New York", lat: 40.8075, lng: -73.9626 },
+  { label: "AArete", place: "Chicago", lat: 41.8781, lng: -87.6298 },
+  { label: "TACC @ UT Austin", place: "Austin", lat: 30.2849, lng: -97.7341 },
+  { label: "Randolph College", place: "Lynchburg", lat: 37.4138, lng: -79.1422 },
 ];
 
-/**
- * Convert latitude/longitude to cobe's phi/theta (radians) so that the location is at the front (phi=0, theta=0).
- * cobe expects phi=0 to be the front (center), so phi = -lng in radians, theta = lat in radians.
- * To bring a location to the front, set phi = -lng * (π/180), theta = lat * (π/180).
- */
-function latLngToPhi(lat: number, lng: number) {
-  const phi = -lng * (Math.PI / 180);
-  const theta = lat * (Math.PI / 180);
-  return { phi, theta };
+const ACCENT: [number, number, number] = [0, 0.898, 0.749]; // --accent (#00e5bf)
+const HIGHLIGHT: [number, number, number] = [1, 0.8, 0.2];
+const AUTO_SPEED = 0.0025; // radians per frame when idle
+const THETA_MIN = -0.5;
+const THETA_MAX = 0.9;
+const TWO_PI = Math.PI * 2;
+
+/** cobe angles that put a lat/lng at the center of the globe. */
+function anglesFor(lat: number, lng: number) {
+  return {
+    phi: Math.PI - ((lng * Math.PI) / 180 - Math.PI / 2),
+    theta: (lat * Math.PI) / 180,
+  };
+}
+
+/** Smallest signed difference between two angles, in (-π, π]. */
+function angleDiff(from: number, to: number) {
+  const d = (((to - from) % TWO_PI) + TWO_PI) % TWO_PI;
+  return d > Math.PI ? d - TWO_PI : d;
+}
+
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+function hasWebGL() {
+  if (typeof window === "undefined") return true;
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl") || canvas.getContext("experimental-webgl"));
+  } catch {
+    return false;
+  }
 }
 
 export default function Globe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointerInteracting = useRef<number | null>(null);
-  const pointerInteractionMovement = useRef(0);
-  const phiRef = useRef(0);
-  const thetaRef = useRef(0.3);
-  const targetPhiRef = useRef<number | null>(null);
-  const targetThetaRef = useRef<number | null>(null);
-  const widthRef = useRef(0);
-  const [focusedIdx, setFocusedIdx] = useState<number | null>(null);
-  const focusedIdxRef = useRef<number | null>(null);
+  const [webGLSupported] = useState(hasWebGL);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [dragging, setDragging] = useState(false);
 
-  // Keep ref in sync with state for the render loop
-  useEffect(() => {
-    focusedIdxRef.current = focusedIdx;
-  }, [focusedIdx]);
-
-  // Detect WebGL support synchronously (lazy state initializer, no effect needed)
-  const [webGLSupported] = useState(() => {
-    if (typeof window === "undefined") return true; // SSR — assume supported
-    try {
-      const canvas = document.createElement("canvas");
-      const gl =
-        canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-      return !!gl;
-    } catch {
-      return false;
-    }
+  // Animation state lives in refs so the render loop never re-subscribes.
+  const s = useRef({
+    phi: anglesFor(40, -80).phi, // start facing the eastern US
+    theta: 0.35,
+    velPhi: 0,
+    velTheta: 0,
+    targetPhi: null as number | null,
+    targetTheta: null as number | null,
+    drag: null as { x: number; y: number; t: number; pointerId: number; vertical: boolean } | null,
+    highlight: null as number | null,
+    reducedMotion: false,
+    width: 0,
   });
 
-  const onResize = useCallback(() => {
-    if (canvasRef.current) {
-      widthRef.current = canvasRef.current.offsetWidth;
-    }
-  }, []);
-
-  /** Smoothly rotate globe to face a location */
-  const focusLocation = useCallback((idx: number) => {
-    const loc = locations[idx];
-    const { phi, theta } = latLngToPhi(loc.lat, loc.lng);
-    // Normalize target phi relative to current phi to find shortest rotation
-    const currentPhi = phiRef.current + pointerInteractionMovement.current;
-    const diff = phi - (currentPhi % (2 * Math.PI));
-    const normalizedDiff =
-      ((diff + Math.PI) % (2 * Math.PI)) - Math.PI;
-    targetPhiRef.current = currentPhi + normalizedDiff;
-    targetThetaRef.current = theta;
-    // Reset interaction offset since we're taking over phi
-    pointerInteractionMovement.current = 0;
-    setFocusedIdx(idx);
-  }, []);
+  // Keep the render loop's highlighted marker in sync (hover wins over selection).
+  useEffect(() => {
+    s.current.highlight = hovered ?? selected;
+  }, [hovered, selected]);
 
   useEffect(() => {
-    if (!webGLSupported || !canvasRef.current) return;
+    const canvas = canvasRef.current;
+    if (!webGLSupported || !canvas) return;
+    const state = s.current;
+    state.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    window.addEventListener("resize", onResize);
-    onResize();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    state.width = canvas.offsetWidth;
+    const ro = new ResizeObserver(() => {
+      state.width = canvas.offsetWidth;
+    });
+    ro.observe(canvas);
 
-    const globe = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: widthRef.current * 2,
-      height: widthRef.current * 2,
-      phi: 0,
-      theta: 0.3,
+    const markers = () =>
+      locations.map((loc, i) => ({
+        location: [loc.lat, loc.lng] as [number, number],
+        size: state.highlight === i ? 0.12 : 0.06,
+        color: state.highlight === i ? HIGHLIGHT : ACCENT,
+      }));
+
+    const globe = createGlobe(canvas, {
+      devicePixelRatio: dpr,
+      width: state.width * dpr,
+      height: state.width * dpr,
+      phi: state.phi,
+      theta: state.theta,
       dark: 1,
-      diffuse: 1.8,
+      diffuse: 1.6,
       mapSamples: 16000,
-      mapBrightness: 8,
-      baseColor: [0.15, 0.15, 0.22],
-      markerColor: [0, 0.898, 0.749], // matches --accent (#00e5bf)
-      glowColor: [0.08, 0.12, 0.2],
-      markers: locations.map((loc, i) => ({
-        location: [loc.lat, loc.lng], // cobe expects [lat, lng]
-        color: focusedIdxRef.current === i ? [1, 0.8, 0.2] : [0, 0.898, 0.749], // highlight color
-        size: focusedIdxRef.current === i ? 0.14 : 0.07,
-      })),
-      onRender: (state) => {
-        // If animating to a target location
-        if (targetPhiRef.current !== null) {
-          const dphi = targetPhiRef.current - phiRef.current;
-          if (Math.abs(dphi) < 0.01) {
-            phiRef.current = targetPhiRef.current;
-            targetPhiRef.current = null;
-          } else {
-            phiRef.current += dphi * 0.08;
+      mapBrightness: 7,
+      baseColor: [0.16, 0.16, 0.24],
+      markerColor: ACCENT,
+      glowColor: [0.1, 0.14, 0.22],
+      markers: markers(),
+      onRender: (r) => {
+        if (state.targetPhi !== null && state.targetTheta !== null) {
+          // Glide to the selected location (ease-out)
+          state.phi += (state.targetPhi - state.phi) * 0.1;
+          state.theta += (state.targetTheta - state.theta) * 0.1;
+          if (Math.abs(state.targetPhi - state.phi) < 0.001 && Math.abs(state.targetTheta - state.theta) < 0.001) {
+            state.phi = state.targetPhi;
+            state.theta = state.targetTheta;
+            state.targetPhi = state.targetTheta = null;
           }
-        } else if (!pointerInteracting.current) {
-          // Auto-rotate unless user is interacting
-          phiRef.current += 0.003;
+        } else if (!state.drag) {
+          // Momentum after release, easing back to the idle spin
+          const idle = state.reducedMotion || state.highlight !== null ? 0 : AUTO_SPEED;
+          state.velPhi += (idle - state.velPhi) * 0.04;
+          state.velTheta *= 0.9;
+          state.phi += state.velPhi;
+          state.theta = clamp(state.theta + state.velTheta, THETA_MIN, THETA_MAX);
         }
 
-        if (targetThetaRef.current !== null) {
-          const dtheta = targetThetaRef.current - thetaRef.current;
-          if (Math.abs(dtheta) < 0.01) {
-            thetaRef.current = targetThetaRef.current;
-            targetThetaRef.current = null;
-          } else {
-            thetaRef.current += dtheta * 0.08;
-          }
-        }
-
-        state.phi = phiRef.current + pointerInteractionMovement.current;
-        state.theta = thetaRef.current;
-        state.width = widthRef.current * 2;
-        state.height = widthRef.current * 2;
-
-        // Update marker sizes — focused marker pulses larger
-        state.markers = locations.map((loc, i) => ({
-          location: [loc.lat, loc.lng],
-          color: focusedIdxRef.current === i ? [1, 0.8, 0.2] : [0, 0.898, 0.749],
-          size: focusedIdxRef.current === i ? 0.14 : 0.07,
-        }));
+        r.phi = state.phi;
+        r.theta = state.theta;
+        r.width = state.width * dpr;
+        r.height = state.width * dpr;
+        r.markers = markers();
       },
     });
 
-    // Fade in the canvas
-    if (canvasRef.current) {
-      canvasRef.current.style.opacity = "0";
-      requestAnimationFrame(() => {
-        if (canvasRef.current) {
-          canvasRef.current.style.opacity = "1";
-        }
-      });
-    }
+    canvas.style.opacity = "1";
 
     return () => {
       globe.destroy();
-      window.removeEventListener("resize", onResize);
+      ro.disconnect();
     };
-  }, [webGLSupported, onResize]);
+  }, [webGLSupported]);
 
-  // Pointer handlers for drag-to-rotate
-  const onPointerDown = useCallback(
-    (e: React.PointerEvent<HTMLCanvasElement>) => {
-      pointerInteracting.current = e.clientX - pointerInteractionMovement.current;
-      targetPhiRef.current = null; // cancel any auto-rotation-to-target
-      targetThetaRef.current = null;
-      if (canvasRef.current) canvasRef.current.style.cursor = "grabbing";
-    },
-    []
+  // ── Drag handling (pointer capture keeps the drag alive off-canvas) ──
+
+  const onPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const state = s.current;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    state.drag = {
+      x: e.clientX,
+      y: e.clientY,
+      t: performance.now(),
+      pointerId: e.pointerId,
+      // On touch, vertical swipes scroll the page (touch-action: pan-y)
+      vertical: e.pointerType !== "touch",
+    };
+    state.targetPhi = state.targetTheta = null;
+    state.velPhi = state.velTheta = 0;
+    setSelected(null);
+    setDragging(true);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const state = s.current;
+    const drag = state.drag;
+    if (!drag || drag.pointerId !== e.pointerId) return;
+    const now = performance.now();
+    const dt = Math.max(now - drag.t, 1);
+    // Scale by canvas size so one full drag across ≈ half a turn
+    const k = Math.PI / Math.max(state.width, 1);
+    const dPhi = (e.clientX - drag.x) * k;
+    const dTheta = drag.vertical ? (e.clientY - drag.y) * k : 0;
+    state.phi += dPhi;
+    state.theta = clamp(state.theta + dTheta, THETA_MIN, THETA_MAX);
+    // Velocity per ~16ms frame, smoothed, for release momentum
+    state.velPhi = state.velPhi * 0.5 + (dPhi / dt) * 16 * 0.5;
+    state.velTheta = state.velTheta * 0.5 + (dTheta / dt) * 16 * 0.5;
+    drag.x = e.clientX;
+    drag.y = e.clientY;
+    drag.t = now;
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const state = s.current;
+    if (!state.drag || state.drag.pointerId !== e.pointerId) return;
+    // Ignore stale velocity if the pointer paused before release
+    if (performance.now() - state.drag.t > 80) state.velPhi = state.velTheta = 0;
+    state.velPhi = clamp(state.velPhi, -0.15, 0.15);
+    state.velTheta = clamp(state.velTheta, -0.08, 0.08);
+    state.drag = null;
+    setDragging(false);
+  };
+
+  const focusLocation = (idx: number) => {
+    const state = s.current;
+    if (selected === idx) {
+      setSelected(null);
+      return;
+    }
+    const { phi, theta } = anglesFor(locations[idx].lat, locations[idx].lng);
+    state.targetPhi = state.phi + angleDiff(state.phi, phi);
+    state.targetTheta = clamp(theta, THETA_MIN, THETA_MAX);
+    state.velPhi = state.velTheta = 0;
+    setSelected(idx);
+  };
+
+  const heading = (
+    <h3 className="text-sm font-medium tracking-widest uppercase text-accent mb-4">
+      Where I&apos;ve Worked & Studied
+    </h3>
   );
 
-  const onPointerUp = useCallback(() => {
-    pointerInteracting.current = null;
-    if (canvasRef.current) canvasRef.current.style.cursor = "grab";
-  }, []);
-
-  const onPointerOut = useCallback(() => {
-    pointerInteracting.current = null;
-    if (canvasRef.current) canvasRef.current.style.cursor = "grab";
-  }, []);
-
-  const onMouseMove = useCallback(
-    (e: React.PointerEvent<HTMLCanvasElement>) => {
-      if (pointerInteracting.current !== null) {
-        const delta = e.clientX - pointerInteracting.current;
-        pointerInteractionMovement.current = delta / 100;
-      }
-    },
-    []
-  );
-
-  const onTouchMove = useCallback(
-    (e: React.TouchEvent<HTMLCanvasElement>) => {
-      if (pointerInteracting.current !== null && e.touches[0]) {
-        const delta = e.touches[0].clientX - pointerInteracting.current;
-        pointerInteractionMovement.current = delta / 100;
-      }
-    },
-    []
-  );
-
-  // Fallback for no WebGL
   if (!webGLSupported) {
     return (
       <div className="p-6 rounded-2xl border border-border bg-surface">
-        <h3 className="text-sm font-medium tracking-widest uppercase text-accent mb-4">
-          Where I&apos;ve Worked & Studied
-        </h3>
-        <div className="space-y-3">
+        {heading}
+        <ul className="space-y-3">
           {locations.map((loc) => (
-            <div
-              key={loc.label}
-              className="flex items-center gap-3 text-sm"
-            >
+            <li key={loc.label} className="flex items-center gap-3 text-sm">
               <span className="w-2 h-2 rounded-full bg-accent shrink-0" />
               <span className="text-foreground">{loc.label}</span>
-            </div>
+              <span className="text-muted">{loc.place}</span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     );
   }
 
+  const active = hovered ?? selected;
+
   return (
     <div className="relative">
-      <h3 className="text-sm font-medium tracking-widest uppercase text-accent mb-4">
-        Where I&apos;ve Worked & Studied
-      </h3>
+      {heading}
 
-      <div className="relative aspect-square max-w-[400px] mx-auto">
+      <div className="relative aspect-square max-w-[400px] mx-auto select-none">
         <canvas
           ref={canvasRef}
           onPointerDown={onPointerDown}
-          onPointerUp={onPointerUp}
-          onPointerOut={onPointerOut}
-          onPointerMove={onMouseMove}
-          onTouchMove={onTouchMove}
-          className="w-full h-full cursor-grab transition-opacity duration-700"
-          style={{
-            contain: "layout paint size",
-            maxWidth: "100%",
-          }}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onLostPointerCapture={endDrag}
+          aria-label="Interactive globe of places I've worked and studied. Drag to rotate."
+          role="img"
+          className={`w-full h-full opacity-0 transition-opacity duration-700 ${
+            dragging ? "cursor-grabbing" : "cursor-grab"
+          }`}
+          style={{ contain: "layout paint size", touchAction: "pan-y" }}
         />
+        <p
+          className={`pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-widest text-muted transition-opacity duration-300 ${
+            dragging || active !== null ? "opacity-0" : "opacity-70"
+          }`}
+        >
+          Drag to spin
+        </p>
       </div>
 
-      {/* Location labels — click to rotate globe */}
-      <div className="mt-4 flex flex-wrap justify-center gap-3">
-        {locations.map((loc, idx) => (
-          <button
-            key={loc.label}
-            onClick={() => focusLocation(idx)}
-            onMouseEnter={() => setFocusedIdx(idx)}
-            onMouseLeave={() => setFocusedIdx(null)}
-            className={`flex items-center gap-2 px-3 py-1.5 text-xs rounded-full border transition-all duration-200 ${
-              focusedIdx === idx
-                ? "border-accent/40 bg-accent-light text-accent scale-105"
-                : "border-border bg-surface text-muted hover:text-foreground"
-            }`}
-          >
-            <span
-              className={`w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200 ${
-                focusedIdx === idx ? "bg-accent w-2 h-2" : "bg-accent"
+      {/* Location chips — click to glide the globe there */}
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {locations.map((loc, idx) => {
+          const isActive = active === idx;
+          return (
+            <button
+              key={loc.label}
+              type="button"
+              onClick={() => focusLocation(idx)}
+              onMouseEnter={() => setHovered(idx)}
+              onMouseLeave={() => setHovered(null)}
+              onFocus={() => setHovered(idx)}
+              onBlur={() => setHovered(null)}
+              aria-pressed={selected === idx}
+              className={`flex items-start gap-2 px-3 py-2 text-left rounded-xl border transition-colors duration-200 ${
+                isActive
+                  ? "border-accent/40 bg-accent-light"
+                  : "border-border bg-surface hover:border-accent/20"
               }`}
-            />
-            {loc.label}
-          </button>
-        ))}
+            >
+              <span
+                className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
+                  isActive ? "bg-[#ffcc33]" : "bg-accent"
+                }`}
+              />
+              <span className="min-w-0">
+                <span className={`block text-xs font-medium truncate ${isActive ? "text-accent" : "text-foreground"}`}>
+                  {loc.label}
+                </span>
+                <span className="block text-[11px] text-muted">{loc.place}</span>
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
