@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
 import VideoEmbed from "@/components/VideoEmbed";
 
 const sectionAnim = {
@@ -94,11 +93,6 @@ export default function SentinelDetail() {
           (&quot;Drew&quot;). K2 Think assists with parsing fragmented raw data and
           structuring it into ordered JSON before agent consumption.
         </p>
-        <MediaPlaceholder
-          type="diagram"
-          label="Orchestration Pipeline Diagram"
-          description="Neo4j → Agents 1–4 → Report + Audio"
-        />
       </motion.section>
 
       {/* ── Voice Generation ── */}
@@ -126,27 +120,9 @@ export default function SentinelDetail() {
             </ul>
           </div>
         </div>
-        <VideoEmbed placeholder="Sentinel Demo — Audio Investigation Report" />
+        <VideoEmbed src="https://youtu.be/fjBXrFshx8I" title="Sentinel demo" />
       </motion.section>
 
-      {/* ── Screenshots ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Screenshots
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MediaPlaceholder
-            type="image"
-            label="Dashboard UI"
-            description="Investigation interface and report output"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Agent Pipeline Visualization"
-            description="Multi-agent orchestration in action"
-          />
-        </div>
-      </motion.section>
     </>
   );
 }

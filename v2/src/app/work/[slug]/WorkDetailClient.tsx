@@ -5,13 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Github, FileText, Image as ImageIcon } from "lucide-react";
 import { WorkItem, categoryLabels, statusLabels } from "@/data/work";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
-import VideoEmbed from "@/components/VideoEmbed";
 import Reactions from "@/components/Reactions";
 
 // ── Per-slug custom sections ──
 import TACCDetail from "./detail-tacc";
-import NeuralSeekDetail from "./detail-neuralseek";
 import LisanDetail from "./detail-lisan";
 import ToSSummarizerDetail from "./detail-tos";
 import SystemsDetail from "./detail-systems";
@@ -21,7 +18,6 @@ import VoiceAidDetail from "./detail-voiceaid";
 
 const detailComponents: Record<string, React.ComponentType> = {
   "tacc-research": TACCDetail,
-  neuralseek: NeuralSeekDetail,
   lisan: LisanDetail,
   "tos-summarizer": ToSSummarizerDetail,
   "systems-programming": SystemsDetail,
@@ -59,7 +55,7 @@ export default function WorkDetailClient({ item }: WorkDetailClientProps) {
           className="inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors mb-8"
         >
           <ArrowLeft size={14} />
-          Back to Work
+          Back to Projects
         </Link>
       </motion.div>
 

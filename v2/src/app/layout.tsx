@@ -14,18 +14,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://eldadtolla.vercel.app";
+const DESCRIPTION =
+  "CS & Math at Columbia. AI software engineer building production LLM systems and RAG pipelines, and a reinforcement learning researcher.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Eldad Tolla — CS @ Columbia",
     template: "%s — Eldad Tolla",
   },
-  description:
-    "Computer Science student at Columbia University. Focused on AI, machine learning, and research.",
+  description: DESCRIPTION,
+  authors: [{ name: "Eldad Tolla", url: SITE_URL }],
   openGraph: {
     title: "Eldad Tolla — CS @ Columbia",
-    description:
-      "Computer Science student at Columbia University. Focused on AI, machine learning, and research.",
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: "Eldad Tolla",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Eldad Tolla — CS @ Columbia",
+    description: DESCRIPTION,
   },
 };
 

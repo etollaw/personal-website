@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
 import { FileText, Settings, Sparkles } from "lucide-react";
 
 const sectionAnim = {
@@ -121,29 +120,6 @@ export default function ToSSummarizerDetail() {
         </div>
       </motion.section>
 
-      {/* ── Screenshots ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Screenshots
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <MediaPlaceholder
-            type="image"
-            label="Super Layman Mode"
-            description="Key bullet point summary"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Simplified Mode"
-            description="Plain English overview"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Detailed Mode"
-            description="Comprehensive breakdown"
-          />
-        </div>
-      </motion.section>
     </>
   );
 }

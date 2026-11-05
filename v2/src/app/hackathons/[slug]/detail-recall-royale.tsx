@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
-import VideoEmbed from "@/components/VideoEmbed";
 import { BookOpen, Users, Gamepad2, Sparkles } from "lucide-react";
 
 const sectionAnim = {
@@ -129,25 +127,6 @@ export default function RecallRoyaleDetail() {
         </div>
       </motion.section>
 
-      {/* ── Screenshots ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Screenshots
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <MediaPlaceholder
-            type="image"
-            label="Learning Interface"
-            description="Subject selection and flashcard view"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Content Creation"
-            description="User-generated flashcard builder"
-          />
-        </div>
-        <VideoEmbed placeholder="Recall Royale Demo" />
-      </motion.section>
     </>
   );
 }

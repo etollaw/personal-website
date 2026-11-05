@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
-import VideoEmbed from "@/components/VideoEmbed";
 import { CheckCircle, Circle } from "lucide-react";
 
 const sectionAnim = {
@@ -36,11 +34,11 @@ const designValues = [
 ];
 
 const built = [
-  "Core architecture and data models (letters, words, phrases, lessons)",
-  "Supabase backend: auth, database, and audio storage pipeline",
-  "Audio pipeline for letter-level and basic vocabulary pronunciation",
-  "UI component library under active iteration",
-  "MVP scope definition and learning path design",
+  "Web prototype: Next.js + Supabase with letter-level audio lessons",
+  "Language-aware data model (letters → words → phrases) with stable content IDs",
+  "Audio-first curriculum with AVFoundation playback",
+  "SwiftData progress tracking, no account required",
+  "VoiceOver and Dynamic Type support",
 ];
 
 const next = [
@@ -49,7 +47,7 @@ const next = [
   "Introduce user progress tracking, streaks, and review scheduling",
   "Interactive matching exercises (Amharic ↔ English)",
   "Number and symbol recognition exercises",
-  "Integrate speech feedback and pronunciation evaluation",
+  "On-device pronunciation scoring (Speech + Core ML)",
   "Support additional underrepresented languages",
   "User testing with real learners",
 ];
@@ -104,32 +102,32 @@ export default function LisanDetail() {
         </h2>
         <div className="space-y-4 mb-6">
           <p className="text-muted leading-relaxed">
-            Lisan uses Supabase as a unified backend — handling authentication,
-            database, and audio file storage in a single platform. Audio files are
-            stored and served efficiently for low-latency playback. The data models
-            are structured to scale from individual letters to words, phrases, and
-            full interactive exercises.
+            Lisan started as a Next.js + Supabase web prototype and is now being
+            rebuilt as a native iOS app in Swift and SwiftUI. The iOS version runs
+            entirely on-device: pronunciation scoring uses Apple&apos;s Speech
+            framework plus a Core ML model trained with Create ML, so learner audio
+            never leaves the phone.
+          </p>
+          <p className="text-muted leading-relaxed">
+            Content ships as versioned, bundled content packs, and the data model
+            treats language as a first-class dimension, so Tigrinya and Ge&apos;ez
+            can be added later without migrating learner progress.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="p-4 rounded-xl border border-border bg-surface text-center">
-            <p className="text-xs text-muted uppercase tracking-wider mb-1">Frontend</p>
-            <p className="text-sm font-medium">Next.js + React</p>
+            <p className="text-xs text-muted uppercase tracking-wider mb-1">App</p>
+            <p className="text-sm font-medium">Swift + SwiftUI</p>
           </div>
           <div className="p-4 rounded-xl border border-border bg-surface text-center">
-            <p className="text-xs text-muted uppercase tracking-wider mb-1">Backend</p>
-            <p className="text-sm font-medium">Supabase (Auth, DB, Storage)</p>
+            <p className="text-xs text-muted uppercase tracking-wider mb-1">On-device ML</p>
+            <p className="text-sm font-medium">Speech + Core ML</p>
           </div>
           <div className="p-4 rounded-xl border border-border bg-surface text-center">
-            <p className="text-xs text-muted uppercase tracking-wider mb-1">Audio</p>
-            <p className="text-sm font-medium">Letter + Word Pronunciation</p>
+            <p className="text-xs text-muted uppercase tracking-wider mb-1">Data & Audio</p>
+            <p className="text-sm font-medium">SwiftData + AVFoundation</p>
           </div>
         </div>
-        <MediaPlaceholder
-          type="diagram"
-          label="System Architecture Diagram"
-          description="Frontend → Supabase → Audio Pipeline → Learning Engine"
-        />
       </motion.section>
 
       {/* ── Learning Experience ── */}
@@ -194,25 +192,6 @@ export default function LisanDetail() {
         </div>
       </motion.section>
 
-      {/* ── Demo / Screenshots ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Preview
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <MediaPlaceholder
-            type="image"
-            label="Learning Interface"
-            description="Letter recognition and pronunciation drill"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Audio Playback UI"
-            description="Pronunciation with visual feedback"
-          />
-        </div>
-        <VideoEmbed placeholder="Lisan Platform Demo" />
-      </motion.section>
 
       {/* ── Philosophy ── */}
       <motion.section {...sectionAnim} className="mt-12">

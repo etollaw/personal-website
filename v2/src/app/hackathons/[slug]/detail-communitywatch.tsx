@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
 import VideoEmbed from "@/components/VideoEmbed";
 
 const sectionAnim = {
@@ -97,40 +96,10 @@ export default function CommunityWatchDetail() {
         </div>
       </motion.section>
 
-      {/* ── Map + Screenshots ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Screenshots
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <MediaPlaceholder
-            type="image"
-            label="Disparity Dashboard"
-            description="Leaflet map with HOLC redlining overlay"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Equity Badge"
-            description="Report detail showing redline zone + response gap"
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MediaPlaceholder
-            type="image"
-            label="Report Submission"
-            description="Issue reporting interface with location"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Auto-Advocate Output"
-            description="Generated 311-ready complaint text"
-          />
-        </div>
-      </motion.section>
 
       {/* ── Demo ── */}
       <motion.section {...sectionAnim} className="mt-12">
-        <VideoEmbed placeholder="CommunityWatch Platform Demo" />
+        <VideoEmbed src="https://youtu.be/i4PQmHrIgrc" title="CommunityWatch demo" />
       </motion.section>
     </>
   );

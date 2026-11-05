@@ -5,15 +5,17 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About",
+  description:
+    "Eldad Tolla — CS & Math at Columbia, AI software engineering intern, and reinforcement learning researcher.",
 };
 
 const techAreas = [
-  { label: "Languages", value: "Python, C, C++, JavaScript/TypeScript, R" },
-  { label: "ML & AI", value: "Reinforcement Learning, NLP, Speech Recognition, TensorFlow" },
-  { label: "Data", value: "R/ggplot2, QGIS, Pandas, Statistical Modeling" },
-  { label: "Systems", value: "Memory Management, GDB, Valgrind, HPC" },
-  { label: "Web & Tools", value: "Next.js, React, Git, GitHub, System Design" },
-  { label: "Research", value: "Paper Writing, Academic Posters, Experimental Evaluation" },
+  { label: "Languages", value: "Python, Swift, C/C++, Java, TypeScript, SQL" },
+  { label: "AI & ML", value: "LLMs, RAG, LangGraph, MCP, PyTorch, Reinforcement Learning" },
+  { label: "Cloud & Backend", value: "AWS (Bedrock, Lambda, S3), FastAPI, Docker, Kubernetes, CI/CD" },
+  { label: "Data", value: "PostgreSQL, Redis, Kafka, Neo4j, Spark, Data Modeling" },
+  { label: "Apple / iOS", value: "SwiftUI, Core ML, Speech, AVFoundation, SwiftData, VoiceOver" },
+  { label: "Systems & Research", value: "Multithreading, HPC, Performance Tuning, Papers & Posters" },
 ];
 
 export default function AboutPage() {
@@ -25,29 +27,29 @@ export default function AboutPage() {
         {/* Main bio */}
         <div className="lg:col-span-2 space-y-6 text-muted leading-relaxed">
           <p className="text-foreground text-lg leading-relaxed">
-            I&apos;m Eldad Workeneh Tolla, a Computer Science student at Columbia
-            University. Originally from Ethiopia, my roots have profoundly shaped
+            I&apos;m Eldad Workeneh Tolla, a Computer Science and Mathematics
+            student at Columbia University. Originally from Ethiopia, my roots have profoundly shaped
             my perspective and passion for leveraging technology to drive
             meaningful change.
           </p>
           <p>
-            My primary research interests lie at the intersection of reinforcement
-            learning, high-performance computing, and AI systems. In Summer 2025,
-            I conducted research at the Texas Advanced Computing Center (TACC) at
-            UT Austin through the NSF Cyberinfrastructure REU, investigating how
-            search-based planning priors can improve Q-learning convergence.
+            Right now I&apos;m an AI Software Engineering Intern at AArete, where I
+            build production LLM pipelines and RAG systems on AWS Bedrock, and a
+            Software Engineering Intern at NeuralSeek, shipping enterprise AI
+            applications. Before that, I spent Summer 2025 at the Texas Advanced
+            Computing Center (TACC) at UT Austin through the NSF Cyberinfrastructure
+            REU, studying how search-based planning can speed up Q-learning.
           </p>
           <p>
-            Beyond research, I bring technical depth across the stack — from
-            systems-level C programming to data analysis in R and QGIS, to
-            building full-stack web applications. I believe in understanding
-            technology at every level, not just the abstractions.
+            I like understanding technology at every level, not just the
+            abstractions — from multithreaded C++ and HPC experiments to cloud
+            infrastructure and native iOS. My current side project, Lisan, is an
+            iOS app that teaches Amharic with fully on-device pronunciation scoring.
           </p>
           <p>
-            Through my coursework and hands-on projects, I&apos;m building
-            expertise in algorithm design, ML workflows, and data-driven
-            problem-solving. I&apos;m especially passionate about applying these
-            skills to real-world challenges affecting underrepresented communities.
+            I&apos;m especially motivated by work that helps underrepresented
+            communities, whether that&apos;s a language app for the Ethiopian
+            diaspora or a data pipeline for a nonprofit.
           </p>
           <p>
             As I continue my journey, I&apos;m committed to creating a community
@@ -69,7 +71,11 @@ export default function AboutPage() {
               </div>
               <div>
                 <dt className="text-muted">Major</dt>
-                <dd className="font-medium">Computer Science</dd>
+                <dd className="font-medium">Computer Science & Mathematics</dd>
+              </div>
+              <div>
+                <dt className="text-muted">Graduating</dt>
+                <dd className="font-medium">Spring 2028</dd>
               </div>
               <div>
                 <dt className="text-muted">From</dt>
@@ -80,8 +86,12 @@ export default function AboutPage() {
                 <dd className="font-medium">New York, NY</dd>
               </div>
               <div>
-                <dt className="text-muted">Research</dt>
-                <dd className="font-medium">RL, HPC, AI Planning</dd>
+                <dt className="text-muted">Currently</dt>
+                <dd className="font-medium">AArete · NeuralSeek</dd>
+              </div>
+              <div>
+                <dt className="text-muted">Interests</dt>
+                <dd className="font-medium">Applied AI, RL, Accessible Tech</dd>
               </div>
             </dl>
           </div>
@@ -107,7 +117,7 @@ export default function AboutPage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {techAreas.map((area) => (
-            <div
+            <dl
               key={area.label}
               className="p-5 rounded-2xl border border-border bg-surface"
             >
@@ -115,7 +125,7 @@ export default function AboutPage() {
                 {area.label}
               </dt>
               <dd className="text-sm font-medium leading-relaxed">{area.value}</dd>
-            </div>
+            </dl>
           ))}
         </div>
         <p className="mt-6 text-sm text-muted">

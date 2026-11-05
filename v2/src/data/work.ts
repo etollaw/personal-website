@@ -54,9 +54,6 @@ export const work: WorkItem[] = [
     links: [
       { label: "Research Paper (PDF)", href: "/images/DRAFT PAPER2.pdf", type: "paper" },
       { label: "Academic Poster", href: "/images/Tolla_TACC_42x56in.pdf", type: "poster" },
-      { label: "REU Cohort", href: "/images/reucohort.jpeg", type: "external" },
-      { label: "Poster Presentation", href: "/images/reupresentation.jpeg", type: "external" },
-      { label: "TACC Facility", href: "/images/taccfacility.jpeg", type: "external" },
     ],
     highlights: [
       "Implemented RL agents using approximate Q-learning in the Pac-Man environment",
@@ -68,59 +65,32 @@ export const work: WorkItem[] = [
     hasDetailPage: true,
   },
 
-  // ── NeuralSeek ──
-  {
-    slug: "neuralseek",
-    title: "NeuralSeek",
-    subtitle: "Intelligent Search & Discovery System",
-    description:
-      "A research-inspired product exploring intelligent search and discovery over complex structured and unstructured data. Focused on ML-driven relevance, system architecture, and iterative engineering.",
-    longDescription:
-      "NeuralSeek is an early-stage system designed to help users search, filter, and reason over heterogeneous information. The project emphasizes a thoughtful system design approach: data ingestion pipelines, embedding-based retrieval, and relevance ranking — built with extensibility and iteration in mind.\n\nThe goal is not to build another generic search tool, but to explore how ML components (embeddings, learned ranking, query understanding) can meaningfully improve discovery in domain-specific contexts.",
-    category: "product",
-    status: "in-progress",
-    tags: ["Search", "Embeddings", "Retrieval", "Python", "System Design"],
-    image: "/images/pic20.jpg",
-    featured: true,
-    period: "2025 – Present",
-    links: [
-      { label: "GitHub Repository", href: "#", type: "github" },
-      { label: "Live Demo", href: "#", type: "demo" },
-    ],
-    highlights: [
-      "Designed data ingestion pipeline for structured + unstructured sources",
-      "Exploring embedding-based retrieval and learned ranking models",
-      "MVP-first approach with clear iteration roadmap",
-      "Emphasis on system architecture and extensibility",
-    ],
-    hasDetailPage: true,
-  },
 
   // ── Lisan — Language Learning Platform ──
   {
     slug: "lisan",
     title: "Lisan — Accessible Language Learning",
-    subtitle: "Culturally Grounded Language Education Platform",
+    subtitle: "Native iOS App for Learning Amharic",
     description:
-      "An in-progress language learning platform focused on accessible, culturally grounded education for underrepresented languages — starting with Amharic. Built with Next.js and Supabase with an audio-first learning approach.",
+      "A native iOS app teaching Amharic to the Ethiopian diaspora, built in Swift and SwiftUI with on-device pronunciation scoring (Speech + Core ML), an audio-first curriculum, and full VoiceOver and Dynamic Type support.",
     longDescription:
-      "Lisan is inspired by my background growing up between cultures and languages. Many widely used language platforms fail to adequately support underrepresented languages or prioritize accessibility for learners with different cognitive, auditory, or educational needs. Lisan addresses these gaps by combining modern web technology, audio-first learning, and inclusive UX principles.\n\nThe platform is built on Next.js with Supabase handling auth, database, and audio storage. The architecture supports clean data models for letters, words, phrases, and lessons — designed to scale from Amharic to additional underrepresented languages. This is intentionally iterative: the goal is not rapid feature accumulation, but thoughtful design balancing pedagogy, accessibility, and technical scalability.",
+      "Lisan is inspired by my background growing up between cultures and languages. Many widely used language platforms fail to adequately support underrepresented languages or prioritize accessibility for learners with different cognitive, auditory, or educational needs. Lisan addresses these gaps by combining modern web technology, audio-first learning, and inclusive UX principles.\n\nIt began as a Next.js + Supabase web prototype and is now a native iOS app. Pronunciation is scored fully on-device with Apple's Speech framework and a Create ML model, so learner audio never leaves the phone. Progress is stored locally with SwiftData, and the data model is built to scale from letters to words and phrases — and from Amharic to other underrepresented languages. This is intentionally iterative: the goal is not rapid feature accumulation, but thoughtful design balancing pedagogy, accessibility, and technical scalability.",
     category: "product",
     status: "in-progress",
-    tags: ["Next.js", "Supabase", "Accessibility", "Audio", "React", "EdTech"],
+    tags: ["Swift", "SwiftUI", "Core ML", "Speech", "AVFoundation", "Accessibility"],
     image: "https://raw.githubusercontent.com/etollaw/personal-website/main/lisan.png",
     featured: true,
-    period: "2025 – Present",
+    period: "2024 – Present",
     links: [
-      { label: "GitHub Repository", href: "https://github.com/etollaw/Lisan-app", type: "github" },
-      { label: "Live Demo", href: "https://lisan-app.vercel.app/learn", type: "demo" },
+      { label: "Web Prototype (Demo)", href: "https://lisan-app.vercel.app/learn", type: "demo" },
+      { label: "Web Prototype (GitHub)", href: "https://github.com/etollaw/Lisan-app", type: "github" },
     ],
     highlights: [
-      "Audio-first learning pipeline for letter- and word-level pronunciation",
-      "Supabase-based unified backend (auth, database, audio storage)",
-      "Accessibility-first design: clear typography, minimal cognitive load, touch-friendly",
-      "Clean data models scaling from letters → words → phrases → exercises",
-      "Designed with neurodiverse learners in mind",
+      "On-device pronunciation scoring with Speech + a Create ML Core ML model — no network needed",
+      "Audio-first curriculum (letters → words → phrases) with AVFoundation playback",
+      "SwiftData progress tracking with a schema ready for CloudKit sync",
+      "Full VoiceOver and Dynamic Type accessibility",
+      "Owns app architecture, data modeling, and deployment end to end",
     ],
     hasDetailPage: true,
   },
@@ -142,7 +112,6 @@ export const work: WorkItem[] = [
     period: "2025",
     links: [
       { label: "GitHub Repository", href: "https://github.com/etollaw/tos-summarizer-extension", type: "github" },
-      { label: "Demo", href: "#", type: "demo" },
     ],
     highlights: [
       "Three summary modes: Super Layman, Simplified, and Detailed",
@@ -152,6 +121,26 @@ export const work: WorkItem[] = [
       "Built as a Chrome extension with Chrome API integration",
     ],
     hasDetailPage: true,
+  },
+
+  // ── Backtesting Engine ──
+  {
+    slug: "backtesting-engine",
+    title: "High-Performance Backtesting Engine",
+    subtitle: "Low-Latency Market Simulation in C++",
+    description:
+      "A low-latency market-simulation platform with lock-efficient order books and an event-driven execution engine. Concurrent replay pipelines reach ~8× the throughput of a naive baseline, with analytics for Sharpe ratio, drawdown, and P&L attribution.",
+    category: "systems",
+    status: "completed",
+    tags: ["C++", "Multithreading", "Concurrency", "Order Books", "Performance"],
+    featured: true,
+    period: "2026",
+    highlights: [
+      "Lock-efficient order books and an event-driven execution engine",
+      "Concurrent replay pipelines with ~8× throughput over a naive baseline",
+      "Analytics for Sharpe ratio, drawdown, and P&L attribution",
+    ],
+    hasDetailPage: false,
   },
 
   // ── Systems Programming (C) ──
@@ -169,9 +158,6 @@ export const work: WorkItem[] = [
     image: "https://raw.githubusercontent.com/etollaw/personal-website/main/systemsprogramming.png",
     featured: true,
     period: "2024 – 2025",
-    links: [
-      { label: "Course Projects (GitHub)", href: "#", type: "github" },
-    ],
     highlights: [
       "Manual memory management: allocation, pointers, buffer debugging",
       "Data structures and algorithms implemented at the systems level",
@@ -196,9 +182,6 @@ export const work: WorkItem[] = [
     image: "https://raw.githubusercontent.com/etollaw/personal-website/main/dataanalysis.png",
     featured: true,
     period: "2024 – 2025",
-    links: [
-      { label: "Analysis Notebooks", href: "#", type: "github" },
-    ],
     highlights: [
       "Statistical analysis and modeling in R",
       "Data cleaning and exploratory data analysis on real-world datasets",
@@ -321,8 +304,11 @@ export const work: WorkItem[] = [
   },
 ];
 
-// Helper to get featured work items
-export const featuredWork = work.filter((w) => w.featured);
+// Projects shown on the home page, in this order
+const homeSlugs = ["tacc-research", "lisan", "voice-aid"];
+export const featuredWork = homeSlugs
+  .map((slug) => work.find((w) => w.slug === slug))
+  .filter((w): w is WorkItem => Boolean(w));
 
 // Helper to get work by category
 export function getWorkByCategory(category: WorkCategory) {

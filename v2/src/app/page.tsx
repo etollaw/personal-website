@@ -6,14 +6,14 @@ import ExperienceCard from "@/components/ExperienceCard";
 import { featuredWork } from "@/data/work";
 import { hackathons } from "@/data/hackathons";
 import { experiences } from "@/data/experiences";
-import { ArrowRight, Code2, Brain, BarChart3, Wrench } from "lucide-react";
+import { ArrowRight, Code2, Brain, Cloud, Database } from "lucide-react";
 import Link from "next/link";
 
 const techStack = [
-  { icon: Brain, label: "Python, ML, RL" },
-  { icon: Code2, label: "C, C++, JS, TS" },
-  { icon: BarChart3, label: "R, QGIS, Data Viz" },
-  { icon: Wrench, label: "Git, HPC, System Design" },
+  { icon: Brain, label: "LLMs, RAG, Agents, RL" },
+  { icon: Code2, label: "Python, Swift, C++, TypeScript" },
+  { icon: Cloud, label: "AWS Bedrock, Docker, FastAPI" },
+  { icon: Database, label: "Postgres, Neo4j, Redis, Spark" },
 ];
 
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
           description="Research, products, and technical projects across AI, systems, and data."
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredWork.slice(0, 4).map((item, i) => (
+          {featuredWork.map((item, i) => (
             <WorkCard key={item.slug} item={item} index={i} />
           ))}
         </div>
@@ -77,7 +77,7 @@ export default function Home() {
           <SectionHeading
             label="Stack"
             title="Technical Breadth"
-            description="Comfortable across the stack — from low-level systems to ML research to data visualization."
+            description="From production LLM pipelines and cloud infrastructure to low-level C++ and native iOS."
           />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {techStack.map((item) => (
@@ -100,11 +100,11 @@ export default function Home() {
         <SectionHeading
           label="Experience"
           title="Where I've Contributed"
-          description="Research, leadership, and hands-on roles that shaped my approach to technology."
+          description="Applied AI in industry and reinforcement learning research."
         />
         <div className="max-w-3xl">
           {featuredExperiences.map((exp, i) => (
-            <ExperienceCard key={exp.title} experience={exp} index={i} />
+            <ExperienceCard key={exp.title + exp.organization} experience={exp} index={i} compact />
           ))}
         </div>
         <div className="mt-8">

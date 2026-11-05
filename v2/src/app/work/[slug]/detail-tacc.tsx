@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
-import VideoEmbed from "@/components/VideoEmbed";
+import Image from "next/image";
+import { ArrowUpRight, FileText, Presentation } from "lucide-react";
 
 const sectionAnim = {
   initial: { opacity: 0, y: 15 },
@@ -10,6 +10,34 @@ const sectionAnim = {
   viewport: { once: true as const },
   transition: { duration: 0.5 },
 };
+
+const results = [
+  { value: "38–62%", label: "faster convergence vs. cold start" },
+  { value: "67–133%", label: "higher final reward" },
+  { value: "15", label: "experiments × 1,000 episodes" },
+  { value: "90", label: "GPU HPC nodes" },
+];
+
+const deliverables = [
+  {
+    icon: FileText,
+    title: "Research Paper",
+    description: "Methodology, experiments, and results (PDF)",
+    href: "/images/DRAFT PAPER2.pdf",
+  },
+  {
+    icon: Presentation,
+    title: "Academic Poster",
+    description: "Presented to 50+ researchers at the TACC REU symposium",
+    href: "/images/Tolla_TACC_42x56in.pdf",
+  },
+];
+
+const photos = [
+  { src: "/images/reupresentation.jpeg", caption: "Presenting the poster at the REU symposium" },
+  { src: "/images/reucohort.jpeg", caption: "The 2025 REU cohort" },
+  { src: "/images/taccfacility.jpeg", caption: "TACC facility, UT Austin" },
+];
 
 export default function TACCDetail() {
   return (
@@ -57,18 +85,13 @@ export default function TACCDetail() {
           </p>
         </div>
 
-        {/* Placeholder for figures */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MediaPlaceholder
-            type="figure"
-            label="Learning Curve Comparison"
-            description="Cold-start vs warm-start convergence"
-          />
-          <MediaPlaceholder
-            type="figure"
-            label="Cumulative Reward Distribution"
-            description="Across multiple independent runs"
-          />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {results.map((r) => (
+            <div key={r.label} className="p-4 rounded-2xl border border-border bg-surface">
+              <p className="text-2xl font-bold text-accent tracking-tight">{r.value}</p>
+              <p className="text-xs text-muted mt-1 leading-snug">{r.label}</p>
+            </div>
+          ))}
         </div>
       </motion.section>
 
@@ -78,27 +101,25 @@ export default function TACCDetail() {
           Deliverables
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MediaPlaceholder
-            type="pdf"
-            label="Research Paper (PDF)"
-            description="Full paper with methodology and results"
-          />
-          <MediaPlaceholder
-            type="poster"
-            label="Academic Poster"
-            description="Presented at TACC REU symposium"
-          />
+          {deliverables.map((d) => (
+            <a
+              key={d.title}
+              href={d.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-start gap-4 p-5 rounded-2xl border border-border bg-surface hover:border-accent/30 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center shrink-0">
+                <d.icon size={18} className="text-accent" />
+              </div>
+              <div className="flex-1">
+                <p className="font-medium group-hover:text-accent transition-colors">{d.title}</p>
+                <p className="text-sm text-muted mt-1">{d.description}</p>
+              </div>
+              <ArrowUpRight size={16} className="text-muted group-hover:text-accent transition-colors" />
+            </a>
+          ))}
         </div>
-      </motion.section>
-
-      {/* ── Presentation & Demo ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Presentation
-        </h2>
-        <VideoEmbed
-          placeholder="Research Presentation / Talk"
-        />
       </motion.section>
 
       {/* ── Photos from the REU ── */}
@@ -106,22 +127,27 @@ export default function TACCDetail() {
         <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
           Photos
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          <MediaPlaceholder
-            type="photo"
-            label="REU Cohort"
-            aspectRatio="4/3"
-          />
-          <MediaPlaceholder
-            type="photo"
-            label="Poster Presentation"
-            aspectRatio="4/3"
-          />
-          <MediaPlaceholder
-            type="photo"
-            label="TACC Facility"
-            aspectRatio="4/3"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {photos.map((photo) => (
+            <a
+              key={photo.src}
+              href={photo.src}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block"
+            >
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-border">
+                <Image
+                  src={photo.src}
+                  alt={photo.caption}
+                  fill
+                  sizes="(min-width: 640px) 300px, 100vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <p className="text-xs text-muted mt-2">{photo.caption}</p>
+            </a>
+          ))}
         </div>
       </motion.section>
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
 
 const sectionAnim = {
   initial: { opacity: 0, y: 15 },
@@ -76,24 +75,6 @@ export default function SystemsDetail() {
         </div>
       </motion.section>
 
-      {/* ── Sample Work ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Sample Work
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MediaPlaceholder
-            type="image"
-            label="Project Screenshot"
-            description="Course project implementation"
-          />
-          <MediaPlaceholder
-            type="image"
-            label="Code Sample"
-            description="Systems-level C implementation"
-          />
-        </div>
-      </motion.section>
     </>
   );
 }

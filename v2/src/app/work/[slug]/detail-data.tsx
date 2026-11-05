@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MediaPlaceholder from "@/components/MediaPlaceholder";
 
 const sectionAnim = {
   initial: { opacity: 0, y: 15 },
@@ -72,36 +71,7 @@ export default function DataAnalysisDetail() {
         </div>
       </motion.section>
 
-      {/* ── Sample Visualizations ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Sample Visualizations
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MediaPlaceholder
-            type="figure"
-            label="Statistical Visualization"
-            description="R/ggplot2 analysis output"
-          />
-          <MediaPlaceholder
-            type="diagram"
-            label="Spatial Analysis Map"
-            description="QGIS geographic visualization"
-          />
-        </div>
-      </motion.section>
 
-      {/* ── Notebooks ── */}
-      <motion.section {...sectionAnim} className="mt-12">
-        <h2 className="text-xs font-medium tracking-widest uppercase text-accent mb-4">
-          Notebooks & Code
-        </h2>
-        <MediaPlaceholder
-          type="image"
-          label="Analysis Notebooks"
-          description="R notebooks and scripts — link coming soon"
-        />
-      </motion.section>
     </>
   );
 }

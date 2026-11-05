@@ -1,10 +1,13 @@
 import { Metadata } from "next";
 import SectionHeading from "@/components/SectionHeading";
-import { FileDown } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Resume",
+  description: "Eldad Tolla's resume — AI software engineering, RAG, reinforcement learning, and iOS.",
 };
+
+const RESUME_PATH = "/Eldad_Tolla_Resume.pdf";
 
 export default function ResumePage() {
   return (
@@ -12,26 +15,45 @@ export default function ResumePage() {
       <SectionHeading
         label="Resume"
         title="My Resume"
-        description="Download a copy of my latest resume below."
-      />
-
-      <div className="max-w-lg">
-        <div className="p-8 rounded-2xl border border-border bg-surface text-center">
-          <div className="w-16 h-16 rounded-2xl bg-accent-light flex items-center justify-center mx-auto mb-4">
-            <FileDown size={28} className="text-accent" />
-          </div>
-          <h3 className="text-lg font-semibold">Eldad Tolla — Resume</h3>
-          <p className="text-sm text-muted mt-2">
-            PDF format &middot; Updated 2026
-          </p>
+        description="Updated October 2026. View it below or download a copy."
+      >
+        <div className="mt-6 flex flex-wrap gap-3">
           <a
-            href="/images/new_resume.pdf"
-            download
-            className="inline-block mt-6 px-6 py-3 bg-accent text-background font-medium text-sm rounded-lg hover:opacity-90 transition-opacity"
+            href={RESUME_PATH}
+            download="Eldad_Tolla_Resume.pdf"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background font-medium text-sm rounded-lg hover:opacity-90 transition-opacity"
           >
-            Download Resume (PDF)
+            <Download size={16} />
+            Download PDF
+          </a>
+          <a
+            href={RESUME_PATH}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-border text-sm font-medium rounded-lg hover:bg-surface transition-colors"
+          >
+            <ExternalLink size={16} />
+            Open in New Tab
           </a>
         </div>
+      </SectionHeading>
+
+      {/* Inline preview (hidden on small screens, where PDF embeds work poorly) */}
+      <div className="hidden md:block max-w-4xl rounded-2xl overflow-hidden border border-border bg-white">
+        <object
+          data={`${RESUME_PATH}#view=FitH&toolbar=0`}
+          type="application/pdf"
+          className="w-full h-[1100px]"
+          aria-label="Eldad Tolla resume"
+        >
+          <p className="p-8 text-sm text-neutral-600">
+            Your browser can&apos;t show PDFs inline.{" "}
+            <a href={RESUME_PATH} className="underline">
+              Download the resume
+            </a>{" "}
+            instead.
+          </p>
+        </object>
       </div>
     </div>
   );

@@ -144,10 +144,7 @@ export const hackathons: HackathonItem[] = [
       "Demonstrate the community content discovery",
     ],
     image: "/images/pic20.jpg",
-    links: [
-      { label: "GitHub Repository", href: "#", type: "github" },
-      { label: "Demo", href: "#", type: "demo" },
-    ],
+    links: [],
     tags: ["Flask", "Python", "SQLite", "EdTech", "Gamification"],
     hasDetailPage: true,
     reflections: {

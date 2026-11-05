@@ -28,8 +28,8 @@ const contacts = [
   {
     icon: Instagram,
     label: "Instagram",
-    value: "@eldorado._._",
-    href: "https://www.instagram.com/eldorado._._",
+    value: "@eldad._._",
+    href: "https://www.instagram.com/eldad._._",
   },
   {
     icon: MapPin,

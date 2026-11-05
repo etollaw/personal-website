@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -33,7 +34,7 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-widest uppercase border border-border rounded-full text-accent"
           >
-            Computer Science @ Columbia University
+            CS & Math @ Columbia University
           </motion.div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
@@ -50,9 +51,26 @@ export default function Hero() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="mt-6 text-lg sm:text-xl text-muted leading-relaxed max-w-xl"
           >
-            Researcher and builder focused on AI, machine learning, and
-            data-driven solutions. Originally from Ethiopia, now building at the
-            intersection of technology and social impact.
+            AI software engineer and researcher. I build production LLM systems,
+            RAG pipelines, and tools that make technology more accessible.
+            Originally from Ethiopia, now in New York.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="mt-5 flex items-center gap-2.5 text-sm text-muted"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            <span>
+              Currently: AI SWE Intern at{" "}
+              <span className="text-foreground">AArete</span> · SWE Intern at{" "}
+              <span className="text-foreground">NeuralSeek</span>
+            </span>
           </motion.p>
 
           <motion.div
@@ -61,18 +79,24 @@ export default function Hero() {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="mt-8 flex flex-wrap gap-3"
           >
-            <a
+            <Link
               href="/work"
               className="px-6 py-3 bg-accent text-background font-medium text-sm rounded-lg hover:opacity-90 transition-opacity"
             >
               View Projects
-            </a>
-            <a
+            </Link>
+            <Link
+              href="/resume"
+              className="px-6 py-3 border border-border text-sm font-medium rounded-lg hover:bg-surface transition-colors"
+            >
+              Resume
+            </Link>
+            <Link
               href="/contact"
               className="px-6 py-3 border border-border text-sm font-medium rounded-lg hover:bg-surface transition-colors"
             >
               Get in Touch
-            </a>
+            </Link>
           </motion.div>
         </motion.div>
 

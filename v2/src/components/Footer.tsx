@@ -13,7 +13,7 @@ const socials = [
     label: "LinkedIn",
   },
   {
-    href: "https://www.instagram.com/eldorado._._",
+    href: "https://www.instagram.com/eldad._._",
     icon: Instagram,
     label: "Instagram",
   },
@@ -33,7 +33,7 @@ export default function Footer() {
             Eldad Tolla
           </Link>
           <p className="text-sm text-muted">
-            Computer Science @ Columbia University
+            CS &amp; Math @ Columbia University
           </p>
         </div>
 
