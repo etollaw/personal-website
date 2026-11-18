@@ -15,21 +15,22 @@ const results = [
   { value: "38–62%", label: "faster convergence vs. cold start" },
   { value: "67–133%", label: "higher final reward" },
   { value: "15", label: "experiments × 1,000 episodes" },
-  { value: "90", label: "GPU HPC nodes" },
+  { value: "85%", label: "win rate vs. 45% for cold start" },
 ];
 
 const deliverables = [
   {
     icon: FileText,
     title: "Research Paper",
-    description: "Methodology, experiments, and results (PDF)",
-    href: "/images/DRAFT PAPER2.pdf",
+    description:
+      "“Jumpstarting Q-Learning with Suboptimal Pathfinding: A Warm-Start Approach in Pacman” — with Kushagra Gupta and Dr. Ufuk Topcu (PDF)",
+    href: "/images/Eldad_Tolla_TACC_Paper.pdf",
   },
   {
     icon: Presentation,
     title: "Academic Poster",
     description: "Presented to 50+ researchers at the TACC REU symposium",
-    href: "/images/Tolla_TACC_42x56in.pdf",
+    href: "/images/Eldad_Tolla_TACC_Poster.pdf",
   },
 ];
 
@@ -139,7 +140,7 @@ export default function TACCDetail() {
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-border">
                 <Image
                   src={photo.src}
-                  alt={photo.caption}
+                  alt=""
                   fill
                   sizes="(min-width: 640px) 300px, 100vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"

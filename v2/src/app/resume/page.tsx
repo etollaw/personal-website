@@ -12,7 +12,7 @@ const RESUME_PATH = "/Eldad_Tolla_Resume.pdf";
 export default function ResumePage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-24">
-      <SectionHeading
+      <SectionHeading as="h1"
         label="Resume"
         title="My Resume"
         description="Updated October 2026. View it below or download a copy."

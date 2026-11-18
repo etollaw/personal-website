@@ -44,3 +44,20 @@ body {
   background: var(--accent);
   color: var(--background);
 }
+
+/* Entrance + idle animations (CSS, so content shows without waiting for JS) */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.25, 0.4, 0.25, 1) both; }
+.animate-page-in { animation: fade-up 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
+.animate-bob { animation: bob 2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-page-in, .animate-bob { animation: none; }
+}

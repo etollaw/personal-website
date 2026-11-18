@@ -42,7 +42,7 @@ const contacts = [
 export default function ContactPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-24">
-      <SectionHeading
+      <SectionHeading as="h1"
         label="Contact"
         title="Get in Touch"
         description="I'm always open to new opportunities, collaborations, or just a friendly conversation."

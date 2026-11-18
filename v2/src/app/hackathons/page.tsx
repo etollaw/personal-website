@@ -15,7 +15,7 @@ const stats = [
 export default function HackathonsPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-24">
-      <SectionHeading
+      <SectionHeading as="h1"
         label="Hackathons"
         title="Rapid Builds"
         description="Shipping under pressure — end-to-end demos, collaborative builds, and clear narratives. Every project here was built from scratch within strict time constraints."

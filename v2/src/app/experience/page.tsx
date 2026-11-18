@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ExperiencePage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-24">
-      <SectionHeading
+      <SectionHeading as="h1"
         label="Experience"
         title="My Journey"
         description="Industry internships in applied AI, research in reinforcement learning, and the leadership roles that came before."

@@ -9,6 +9,8 @@ interface SectionHeadingProps {
   description?: string;
   children?: ReactNode;
   className?: string;
+  /** Use "h1" for the main heading of a page. */
+  as?: "h1" | "h2";
 }
 
 export default function SectionHeading({
@@ -17,6 +19,7 @@ export default function SectionHeading({
   description,
   children,
   className = "",
+  as: Heading = "h2",
 }: SectionHeadingProps) {
   return (
     <motion.div
@@ -31,9 +34,9 @@ export default function SectionHeading({
           {label}
         </span>
       )}
-      <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
+      <Heading className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
         {title}
-      </h2>
+      </Heading>
       {description && (
         <p className="mt-4 text-muted max-w-2xl leading-relaxed">
           {description}

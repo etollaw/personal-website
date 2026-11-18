@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Link from "next/link";
 
@@ -17,27 +14,27 @@ export default function Hero() {
         }}
       />
 
-      {/* Gradient orb */}
-      <div className="absolute top-1/4 -right-32 w-96 h-96 bg-accent rounded-full opacity-[0.05] blur-[120px]" />
-      <div className="absolute bottom-1/4 -left-32 w-80 h-80 bg-purple-500 rounded-full opacity-[0.04] blur-[100px]" />
+      {/* Soft glows (radial gradients are far cheaper to paint than blur filters) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(28rem circle at 85% 30%, rgba(0,229,191,0.07), transparent 70%), radial-gradient(24rem circle at 5% 75%, rgba(168,85,247,0.06), transparent 70%)",
+        }}
+      />
 
       <div className="relative max-w-6xl mx-auto px-6 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-          className="max-w-3xl"
-        >
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-widest uppercase border border-border rounded-full text-accent"
+        <div className="max-w-3xl">
+          <div
+            style={{ animationDelay: "100ms" }}
+            className="animate-fade-up inline-block px-3 py-1 mb-6 text-xs font-medium tracking-widest uppercase border border-border rounded-full text-accent"
           >
             CS & Math @ Columbia University
-          </motion.div>
+          </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+          <h1
+            style={{ animationDelay: "200ms" }}
+            className="animate-fade-up text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
             <span className="block">Hello.</span>
             <span className="block mt-2">
               I&apos;m{" "}
@@ -45,22 +42,18 @@ export default function Hero() {
             </span>
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-6 text-lg sm:text-xl text-muted leading-relaxed max-w-xl"
+          <p
+            style={{ animationDelay: "400ms" }}
+            className="animate-fade-up mt-6 text-lg sm:text-xl text-muted leading-relaxed max-w-xl"
           >
             AI software engineer and researcher. I build production LLM systems,
             RAG pipelines, and tools that make technology more accessible.
             Originally from Ethiopia, now in New York.
-          </motion.p>
+          </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="mt-5 flex items-center gap-2.5 text-sm text-muted"
+          <p
+            style={{ animationDelay: "500ms" }}
+            className="animate-fade-up mt-5 flex items-center gap-2.5 text-sm text-muted"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 animate-ping" />
@@ -71,13 +64,11 @@ export default function Hero() {
               <span className="text-foreground">AArete</span> · SWE Intern at{" "}
               <span className="text-foreground">NeuralSeek</span>
             </span>
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="mt-8 flex flex-wrap gap-3"
+          <div
+            style={{ animationDelay: "600ms" }}
+            className="animate-fade-up mt-8 flex flex-wrap gap-3"
           >
             <Link
               href="/work"
@@ -97,23 +88,14 @@ export default function Hero() {
             >
               Get in Touch
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          >
-            <ArrowDown size={18} className="text-muted" />
-          </motion.div>
-        </motion.div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="hidden sm:block absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-up" style={{ animationDelay: "1200ms" }}>
+        <ArrowDown size={18} className="text-muted animate-bob" />
       </div>
     </section>
   );

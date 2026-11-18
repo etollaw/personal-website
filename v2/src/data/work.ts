@@ -52,8 +52,8 @@ export const work: WorkItem[] = [
     period: "Summer 2025",
     organization: "Texas Advanced Computing Center (TACC) @ UT Austin",
     links: [
-      { label: "Research Paper (PDF)", href: "/images/DRAFT PAPER2.pdf", type: "paper" },
-      { label: "Academic Poster", href: "/images/Tolla_TACC_42x56in.pdf", type: "poster" },
+      { label: "Research Paper (PDF)", href: "/images/Eldad_Tolla_TACC_Paper.pdf", type: "paper" },
+      { label: "Academic Poster", href: "/images/Eldad_Tolla_TACC_Poster.pdf", type: "poster" },
     ],
     highlights: [
       "Implemented RL agents using approximate Q-learning in the Pac-Man environment",

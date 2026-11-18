@@ -23,7 +23,7 @@ export default function WorkPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-24">
-      <SectionHeading
+      <SectionHeading as="h1"
         label="Projects"
         title="Projects & Research"
         description="Research, products, and technical projects across AI, systems, and data — from undergraduate research to personal builds."

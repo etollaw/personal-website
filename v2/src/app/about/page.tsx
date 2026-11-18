@@ -21,7 +21,7 @@ const techAreas = [
 export default function AboutPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-24">
-      <SectionHeading label="About" title="Who I Am" />
+      <SectionHeading as="h1" label="About" title="Who I Am" />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Main bio */}
