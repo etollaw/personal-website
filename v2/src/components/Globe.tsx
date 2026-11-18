@@ -142,7 +142,11 @@ export default function Globe() {
         r.theta = state.theta;
         r.width = state.width * dpr;
         r.height = state.width * dpr;
-        r.markers = markers();
+        // cobe 0.6.5 bug: when markers are updated here it sets the marker
+        // count to markers.length instead of markers.length * 2, so only the
+        // first half get drawn. Passing the list twice makes the count right.
+        const m = markers();
+        r.markers = [...m, ...m];
       },
     });
 
